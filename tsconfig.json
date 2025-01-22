@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "esnext",
+    "lib": ["ES2020", "DOM"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["vue", "vite/client", "./auto-imports.d.ts"],
+    "noImplicitAny": false,
+    "declaration": true,
+    "strict": true, // Enforces strict type checking
+    "esModuleInterop": true, // For compatibility with CommonJS modules
+    "skipLibCheck": true, // Speeds up compilation by skipping checks for node_modules
+  },
+  "include": [
+    "src/**/*",          // All TypeScript files in `src`
+    "src/**/*.ts",          // All TypeScript files in `src`
+    "src/**/*.d.ts",        // All declaration files in `src`
+    "src/types/global.d.ts",   // Ensure `types` folder is included
+    // "src/assets/icons/icons.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

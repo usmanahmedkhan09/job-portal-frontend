@@ -1,0 +1,93 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'); */
+
+@import './base.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+#app {
+  width: 100%;
+}
+
+/* a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+  padding: 3px;
+} */
+
+/* @media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+} */
+
+.x-accordion-item .x-menu-item > span {
+  @apply text-white;
+
+
+}
+
+.x-menu-item a {
+  @apply text-white !important;
+  @apply font-semibold;
+}
+
+.x-menu-item a:hover {
+  background-color: rgb(55 65 81 / 1) !important;
+}
+.x-menu-item-text {
+  @apply text-white;
+}
+
+.router-link-active {
+  background-color: rgb(55 65 81 / 1) !important;
+}
+
+.x-accordion-item .x-menu-item:hover {
+  background-color: rgb(55 65 81 / 1) !important;
+}
+
+.customize-table{
+  --easy-table-header-font-size: 14px;
+  --easy-table-header-height: 50px;
+  --easy-table-header-font-color: #ffffff;
+  --easy-table-header-background-color: #1d83bc;
+}
+
+.vue3-easy-data-table__main {
+  border-radius: 12px;
+}
+
+.x-button {
+  @apply font-semibold;
+}
+
+.Vue-Toastification__toast--default.my-custom-toast-class {
+  background-color: red;
+}
+
+.Vue-Toastification__container .Vue-Toastification__toast--error {
+  @apply bg-red-700 text-white !important;
+  
+}
+
+.Vue-Toastification__container .Vue-Toastification__toast--info {
+  @apply bg-blue-500 text-white;
+}
+
+.Vue-Toastification__container  .Vue-Toastification__toast--success {
+  @apply bg-green-500 text-white;
+}
+
+.Vue-Toastification__container .Vue-Toastification__toast--error {
+  @apply bg-red-500 text-white;
+}
+
+.Vue-Toastification__container .Vue-Toastification__toast--warning {
+  @apply bg-yellow-500 text-black;
+}
+
