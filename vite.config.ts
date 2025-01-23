@@ -37,7 +37,7 @@ export default defineConfig({
           ]
         }
       ],
-      dirs: ['./src/stores/*', './src/Types', './src/Composables/*'],
+      dirs: ['./src/stores/*', './src/Types', './src/Composables/*', './src/Components/*'],
       // defaultExportByFilename: false,
       vueTemplate: true,
       dts: './auto-imports.d.ts',

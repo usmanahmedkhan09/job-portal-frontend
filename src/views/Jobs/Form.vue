@@ -82,7 +82,7 @@ onMounted(() => {
 <template>
   <div class="flex justify-between items-center w-full">
     <h2 class="text-xl font-semibold">
-      {{ isEdit ? 'Update' : 'Create' }} User
+      {{ isEdit ? 'Update' : 'Create' }} Job
     </h2>
     <div class="flex space-x-2 items-center">
       <x-button color="primary" size="md" @click="$router.push('/jobs-list')"

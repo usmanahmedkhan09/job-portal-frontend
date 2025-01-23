@@ -72,9 +72,28 @@ export const useUtils = () =>
         return user;
     }
 
+    const useCleanObj = reactive =>
+    {
+        Object.keys(reactive).forEach(key =>
+        {
+            if (
+                reactive[key] === null ||
+                reactive[key] === undefined ||
+                reactive[key] === '' ||
+                reactive[key] === false ||
+                reactive[key].length === 0
+            )
+            {
+                delete reactive[key];
+            }
+        });
+        return reactive;
+    };
+
     return {
         handleSuccess,
         handleResponse,
-        saveUserDataToLocalStorage
+        saveUserDataToLocalStorage,
+        useCleanObj
     }
 }

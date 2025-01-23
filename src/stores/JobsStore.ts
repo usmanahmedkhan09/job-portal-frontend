@@ -1,17 +1,22 @@
-import { ApiResponse } from "@/Types/ApiResponse";
+import { ApiResponse, Pagination } from "@/Types/ApiResponse";
 import { Job } from "@/Types/Job";
 
 export const useJobsStore = defineStore('jobs', () =>
 {
     const jobs = ref<Job[]>([])
     const job = ref<Job>(new Job());
+    const { useCleanObj } = useUtils();
+    const pagination = ref<Pagination<Job>>(new Pagination());
 
-    async function fetchJobs(name: string | null = null): Promise<void>
+    async function fetchJobs(job: Job = new Job()): Promise<void>
     {
-        const response = await axios.get<ApiResponse<{ data: Job[] }>>('/jobs', { params: { name: name } });
+        const response = await axios.get<ApiResponse<Pagination<Job>>>('/jobs', { params: { ...Job.cleanObject(useCleanObj(job)) } });
         const { success, statusCode, data } = response.data;
         if (success && statusCode === 200)
-            jobs.value = [...data.data]
+        {
+            jobs.value = data.data;
+            pagination.value = Pagination.fromApiResponse(response.data);
+        }
     }
 
     async function createJob(job: Job): Promise<void>
@@ -39,6 +44,6 @@ export const useJobsStore = defineStore('jobs', () =>
 
     }
 
-    return { fetchJobs, updateJob, createJob, getJobById, jobs, job };
+    return { fetchJobs, updateJob, createJob, getJobById, jobs, job, pagination };
 
 })

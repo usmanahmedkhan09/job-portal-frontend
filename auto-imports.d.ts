@@ -12,6 +12,8 @@ declare global {
   const JobCategory: typeof import('./src/Types/Job')['JobCategory']
   const JobStatus: typeof import('./src/Types/Job')['JobStatus']
   const JobType: typeof import('./src/Types/Job')['JobType']
+  const Pagination: typeof import('./src/Types/ApiResponse')['Pagination']
+  const PaginationLinks: typeof import('./src/Types/ApiResponse')['PaginationLinks']
   const Permission: typeof import('./src/Types/Permission')['default']
   const Role: typeof import('./src/Types/Role')['default']
   const Skills: typeof import('./src/Types/Skills')['Skills']
@@ -138,6 +140,7 @@ declare global {
   const until: typeof import('@vueuse/core')['until']
   const useActiveElement: typeof import('@vueuse/core')['useActiveElement']
   const useAnimate: typeof import('@vueuse/core')['useAnimate']
+  const useApiStore: typeof import('./src/stores/ApiStore')['useApiStore']
   const useArrayDifference: typeof import('@vueuse/core')['useArrayDifference']
   const useArrayEvery: typeof import('@vueuse/core')['useArrayEvery']
   const useArrayFilter: typeof import('@vueuse/core')['useArrayFilter']
@@ -160,6 +163,7 @@ declare global {
   const useBroadcastChannel: typeof import('@vueuse/core')['useBroadcastChannel']
   const useBrowserLocation: typeof import('@vueuse/core')['useBrowserLocation']
   const useCached: typeof import('@vueuse/core')['useCached']
+  const useCleanObj: typeof import('./src/Composables/Utils')['useCleanObj']
   const useClipboard: typeof import('@vueuse/core')['useClipboard']
   const useClipboardItems: typeof import('@vueuse/core')['useClipboardItems']
   const useCloned: typeof import('@vueuse/core')['useCloned']
@@ -347,6 +351,7 @@ declare module 'vue' {
     readonly JobCategory: UnwrapRef<typeof import('./src/Types/Job')['JobCategory']>
     readonly JobStatus: UnwrapRef<typeof import('./src/Types/Job')['JobStatus']>
     readonly JobType: UnwrapRef<typeof import('./src/Types/Job')['JobType']>
+    readonly Pagination: UnwrapRef<typeof import('./src/Types/ApiResponse')['Pagination']>
     readonly Permission: UnwrapRef<typeof import('./src/Types/Permission')['default']>
     readonly Role: UnwrapRef<typeof import('./src/Types/Role')['default']>
     readonly Skills: UnwrapRef<typeof import('./src/Types/Skills')['Skills']>
@@ -468,6 +473,7 @@ declare module 'vue' {
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
+    readonly useApiStore: UnwrapRef<typeof import('./src/stores/ApiStore')['useApiStore']>
     readonly useArrayDifference: UnwrapRef<typeof import('@vueuse/core')['useArrayDifference']>
     readonly useArrayEvery: UnwrapRef<typeof import('@vueuse/core')['useArrayEvery']>
     readonly useArrayFilter: UnwrapRef<typeof import('@vueuse/core')['useArrayFilter']>

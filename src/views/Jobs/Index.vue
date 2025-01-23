@@ -1,9 +1,50 @@
 <script setup lang="ts">
+import Pagination from '@/Components/Pagination.vue';
 import { TableHeader } from '@/Types/CommonTypes';
+import { JobCategory, JobStatus } from '@/Types/Job';
 const formatted = (date) => useDateFormat(date, 'YYYY-MM-DD HH:mm:ss');
 
 const jobsStore = useJobsStore();
-const { jobs } = storeToRefs(jobsStore);
+const { jobs, pagination } = storeToRefs(jobsStore);
+
+const jobCategoriesStore = useJobCategoriesStore();
+const { jobCategories } = storeToRefs(jobCategoriesStore);
+
+const skillsStore = useSkillsStore();
+const { skills } = storeToRefs(skillsStore);
+
+const jobCategoriesOptions = computed(() => {
+  return jobCategories.value.map((item: JobCategory) => ({
+    label: item.name,
+    value: item.id,
+  }));
+});
+
+const computedSkills = computed(() => {
+  return skills.value.map((item: any) => ({
+    label: item.name,
+    value: item.id,
+  }));
+});
+
+const jobTypesOptions = computed(() => {
+  return Object.entries(JobType).map(([_, type]) => ({
+    label: type.split('-').join(' ').toUpperCase(),
+    value: type,
+  }));
+});
+
+const jobStatusOptions = computed(() => {
+  return Object.entries(JobStatus).map(([_, status]) => ({
+    label: status.toUpperCase(),
+    value: status,
+  }));
+});
+
+async function getCategorySkills() {
+  await skillsStore.getSkillsByCategoryId(filters.value.category_id);
+}
+
 const tableHeaders = ref<TableHeader[]>([
   { text: 'Ref-id', value: 'id' },
   { text: 'Title', value: 'title' },
@@ -15,21 +56,35 @@ const tableHeaders = ref<TableHeader[]>([
 ]);
 
 const filters = ref({
-  name: '',
+  title: '',
+  category_id: '',
+  skills: [],
+  job_type: '',
+  status: '',
 });
 
 function onSubmit() {
-  jobsStore.fetchJobs(filters.value.name);
+  jobsStore.fetchJobs(filters.value as any);
 }
 
-function onReset() {
+async function onReset() {
   filters.value = {
-    name: '',
+    title: '',
+    category_id: '',
+    skills: [],
+    job_type: '',
+    status: '',
   };
+  await jobsStore.fetchJobs();
 }
+
+const setInitialStates = async () => {
+  await jobsStore.fetchJobs();
+  await jobCategoriesStore.fetchJobCategories();
+};
 
 onMounted(() => {
-  jobsStore.fetchJobs();
+  setInitialStates();
 });
 </script>
 <template>
@@ -43,8 +98,44 @@ onMounted(() => {
   </div>
   <x-divider class="my-4" />
   <x-form @submit="onSubmit" :auto-focus="false">
-    <div class="grid grid-cols-1 gap-4">
-      <x-input label="Name" name="name" v-model="filters.name" />
+    <div class="grid grid-cols-3 gap-4">
+      <x-input
+        label="Title"
+        name="name"
+        placeholder="Search by title"
+        v-model="filters.title"
+      />
+      <x-select
+        label="Job Category"
+        name="job category"
+        v-model="filters.category_id"
+        :options="jobCategoriesOptions"
+        @update:modelValue="getCategorySkills"
+        filterable
+        placeholder="Select Job Category"
+      />
+      <x-select
+        label="Skills"
+        name="skills"
+        v-model="filters.skills"
+        :options="computedSkills"
+        multiple
+        placeholder="Select Skills"
+      />
+      <x-select
+        label="Job Type"
+        name="job type"
+        v-model="filters.job_type"
+        :options="jobTypesOptions"
+        placeholder="Select Job Type"
+      />
+      <x-select
+        label="Status"
+        name="status"
+        v-model="filters.status"
+        :options="jobStatusOptions"
+        placeholder="Select Status"
+      />
     </div>
     <div class="flex gap-4 justify-end">
       <x-button color="#ff5e00" size="md" type="submit">Search</x-button>
@@ -70,4 +161,5 @@ onMounted(() => {
       <span>{{ user.name }}</span>
     </template>
   </DataTable>
+  <Pagination :links="pagination" />
 </template>
