@@ -26,8 +26,6 @@ class Pagination<T>
         pagination.per_page = data.per_page?.toString() ?? null;
         pagination.prev_page_url = data.prev_page_url;
         pagination.to = data.to?.toString() ?? null;
-
-        console.log(pagination);
         return pagination;
     }
 }

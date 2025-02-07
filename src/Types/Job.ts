@@ -7,8 +7,8 @@ class Job
     readonly id?: string | undefined;
     title: string | null = null;
     user_id: string | null = null;
-    description: string | null = null;
-    requirements: string | null = null;
+    description: string | string = '';
+    requirements: string | string = '';
     salary_range: string | null = null;
     location: string | null = null;
     job_type: string | null = null;
@@ -19,25 +19,27 @@ class Job
     readonly updated_at: string | null = null;
     user?: User = new User();
     category?: JobCategory = new JobCategory();
+    page: string | null = null;
 
     constructor(data: Partial<Job> = {})
     {
         Object.assign(this, data);
     }
 
-    static cleanObject(data: Partial<Job>): Pick<Job, 'user_id' | 'title' | 'description' | 'requirements' | 'salary_range' | 'location' | 'job_type' | 'status' | 'skills' | 'category_id'>
+    static cleanObject(data: Partial<Job>): Pick<Job, 'user_id' | 'title' | 'description' | 'requirements' | 'salary_range' | 'location' | 'job_type' | 'status' | 'skills' | 'category_id' | 'page'>
     {
         return {
             user_id: data.user_id ?? null,
             title: data.title ?? null,
-            description: data.description ?? null,
-            requirements: data.requirements ?? null,
+            description: data.description ?? '',
+            requirements: data.requirements ?? '',
             salary_range: data.salary_range ?? null,
             location: data.location ?? null,
             job_type: data.job_type ?? null,
             status: data.status ?? null,
             skills: data.skills ?? [],
             category_id: data.category_id ?? null,
+            page: data.page ?? null,
         };
     }
 }

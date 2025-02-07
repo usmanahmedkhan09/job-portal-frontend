@@ -8,7 +8,7 @@ function routerGuard(router: any)
         const token = useStorage('token', null).value
         if (to.meta.requiresAuth && !token)
         {
-            return next('/login'); // Redirect unauthenticated users
+            return next('/home'); // Redirect unauthenticated users
         }
 
         if (token && to.path === '/login')

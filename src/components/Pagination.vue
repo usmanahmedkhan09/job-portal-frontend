@@ -11,16 +11,14 @@ const loading = ref(false);
 
 <template>
   <div class="flex justify-between items-center gap-2 py-6">
-    <x-link
+    <x-button
       v-if="+props.links.current_page !== 1"
-      :href="props.links.prev_page_url"
-      preserve-scroll
-      preserve-state
+      @click="$emit('page-changed', +props.links.current_page - 1)"
     >
-      <x-button tag="div" size="sm" icon-left="prev" :loading="loading">
-        Previous
-      </x-button>
-    </x-link>
+      <!-- <x-button tag="div" size="sm" icon-left="prev" :loading="loading"> -->
+      Previous
+      <!-- </x-button> -->
+    </x-button>
     <x-button v-else tag="div" size="sm" icon-left="prev" disabled>
       Previous
     </x-button>
@@ -31,16 +29,15 @@ const loading = ref(false);
       (Page: {{ props.links.current_page }})
     </div>
 
-    <x-link
+    <x-button
       v-if="props.links.next_page_url !== null"
-      :href="props.links.next_page_url"
-      preserve-scroll
-      preserve-state
+      @click="$emit('page-changed', +props.links.current_page + 1)"
+      icon-right="next"
     >
-      <x-button tag="div" size="sm" icon-right="next" :loading="loading">
-        Next
-      </x-button>
-    </x-link>
+      <!-- <x-button tag="div" size="sm" icon-right="next" :loading="loading"> -->
+      Next
+      <!-- </x-button> -->
+    </x-button>
     <x-button v-else tag="div" size="sm" icon-right="next" disabled>
       Next
     </x-button>

@@ -3,3 +3,4 @@
     <router-view> </router-view>
   </XNotifications>
 </template>
+<script setup lang="ts"></script>

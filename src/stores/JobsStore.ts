@@ -8,9 +8,18 @@ export const useJobsStore = defineStore('jobs', () =>
     const { useCleanObj } = useUtils();
     const pagination = ref<Pagination<Job>>(new Pagination());
 
-    async function fetchJobs(job: Job = new Job()): Promise<void>
+    const allJobs = computed(() => jobs.value);
+    async function fetchJobs(job: Pick<Job, 'title' | 'location'>): Promise<void>
     {
-        const response = await axios.get<ApiResponse<Pagination<Job>>>('/jobs', { params: { ...Job.cleanObject(useCleanObj(job)) } });
+        const response = await axios.get<ApiResponse<Job[]>>('/get-all-jobs', { params: { ...job } });
+        const { success, statusCode, data } = response.data;
+        if (success && statusCode === 200)
+            jobs.value = data;
+    }
+
+    async function getJobsByUser(job: Job = new Job()): Promise<void>
+    {
+        const response = await axios.get<ApiResponse<Pagination<Job>>>('/get-job-by-user', { params: { ...Job.cleanObject(useCleanObj(job)) } });
         const { success, statusCode, data } = response.data;
         if (success && statusCode === 200)
         {
@@ -44,6 +53,6 @@ export const useJobsStore = defineStore('jobs', () =>
 
     }
 
-    return { fetchJobs, updateJob, createJob, getJobById, jobs, job, pagination };
+    return { fetchJobs, updateJob, createJob, getJobById, jobs, job, pagination, allJobs, getJobsByUser };
 
 })

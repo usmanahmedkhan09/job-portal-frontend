@@ -5,10 +5,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'private-layout',
+      name: 'public-layout',
       component: () => import('@/Layout/PublicLayout.vue'),
-      redirect: '/login',
+      redirect: '/home',
       children: [
+        { path: '/home', name: 'home', component: () => import('@/views/Home.vue') },
         { path: 'login', name: 'Login', component: () => import('@/views/Login.vue') },
       ]
     },
@@ -79,6 +80,15 @@ const router = createRouter({
         { path: '/add-job-category', name: 'add-job-category', component: () => import('@/views/JobsCategories/Form.vue') },
         { path: '/update-job-category/:id', name: 'update-job-category', component: () => import('@/views/JobsCategories/Form.vue') },
         { path: '/job-category-details/:id', name: 'job-category-details', component: () => import('@/views/JobsCategories/Show.vue') },
+      ]
+    },
+    {
+      path: '/jobs-applications-list',
+      name: 'jobs-applications',
+      meta: { requiresAuth: true }, // Requires authentication
+      component: () => import('@/Layout/MainLayout.vue'),
+      children: [
+        { path: '', name: 'jobs-applications-list', component: () => import('@/views/JobApplications/Index.vue') },
       ]
     }
 

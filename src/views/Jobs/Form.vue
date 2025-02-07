@@ -1,5 +1,138 @@
 <script setup lang="ts">
 import { Job, JobCategory, JobStatus, JobType } from '@/Types/Job';
+import { Ckeditor } from '@ckeditor/ckeditor5-vue';
+import {
+  Autoformat,
+  Base64UploadAdapter,
+  BlockQuote,
+  Bold,
+  ClassicEditor,
+  CloudServices,
+  Essentials,
+  Heading,
+  Image,
+  ImageCaption,
+  ImageResize,
+  ImageStyle,
+  ImageToolbar,
+  ImageUpload,
+  Indent,
+  IndentBlock,
+  Italic,
+  Link,
+  List,
+  MediaEmbed,
+  Mention,
+  Paragraph,
+  PasteFromOffice,
+  PictureEditing,
+  Table,
+  TableColumnResize,
+  TableToolbar,
+  TextTransformation,
+  Underline,
+} from 'ckeditor5';
+import 'ckeditor5/ckeditor5.css';
+
+const data = ref('<p>Hello world!</p>');
+
+const config = computed(() => {
+  return {
+    plugins: [
+      Autoformat,
+      BlockQuote,
+      Bold,
+      CloudServices,
+      Essentials,
+      Heading,
+      Image,
+      ImageCaption,
+      ImageResize,
+      ImageStyle,
+      ImageToolbar,
+      ImageUpload,
+      Base64UploadAdapter,
+      Indent,
+      IndentBlock,
+      Italic,
+      Link,
+      List,
+      MediaEmbed,
+      Mention,
+      Paragraph,
+      PasteFromOffice,
+      PictureEditing,
+      Table,
+      TableColumnResize,
+      TableToolbar,
+      TextTransformation,
+      Underline,
+    ],
+    licenseKey: import.meta.env.VITE_CKEDITIOR_KEY,
+    toolbar: [
+      'undo',
+      'redo',
+      '|',
+      'heading',
+      '|',
+      'bold',
+      'italic',
+      'underline',
+      '|',
+      'link',
+      'uploadImage',
+      'insertTable',
+      'blockQuote',
+      'mediaEmbed',
+      '|',
+      'bulletedList',
+      'numberedList',
+      '|',
+      'outdent',
+      'indent',
+    ],
+    heading: {
+      options: [
+        {
+          model: 'paragraph',
+          title: 'Paragraph',
+          class: 'ck-heading_paragraph',
+        },
+        {
+          model: 'heading1',
+          view: 'h1',
+          title: 'Heading 1',
+          class: 'ck-heading_heading1',
+        },
+        {
+          model: 'heading2',
+          view: 'h2',
+          title: 'Heading 2',
+          class: 'ck-heading_heading2',
+        },
+        {
+          model: 'heading3',
+          view: 'h3',
+          title: 'Heading 3',
+          class: 'ck-heading_heading3',
+        },
+        {
+          model: 'heading4',
+          view: 'h4',
+          title: 'Heading 4',
+          class: 'ck-heading_heading4',
+        },
+      ],
+    },
+    link: {
+      addTargetToExternalLinks: true,
+      defaultProtocol: 'https://',
+    },
+    table: {
+      contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
+    },
+  };
+});
 
 const jobsStore = useJobsStore();
 const { job } = storeToRefs(jobsStore);
@@ -147,21 +280,25 @@ onMounted(() => {
         :options="computedSkills"
         multiple
       />
-
-      <x-textarea
-        label="Description"
-        name="description"
-        v-model="jobForm.description"
-        :rules="[is_required]"
-      />
-      <x-textarea
-        label="Requirements"
-        name="requirements"
+    </div>
+    <ckeditor
+      label="Description"
+      name="description"
+      :rules="[is_required]"
+      v-model="jobForm.description"
+      :editor="ClassicEditor"
+      :config="config"
+      class="mt-4"
+    />
+    <div class="mt-4">
+      <ckeditor
         v-model="jobForm.requirements"
-        :rules="[is_required]"
+        :editor="ClassicEditor"
+        :config="config"
       />
     </div>
-    <div class="flex w-full justify-end">
+
+    <div class="flex w-full justify-end mt-4">
       <x-button type="submit" color="success">{{
         isEdit ? 'Update' : 'Create'
       }}</x-button>

@@ -215,6 +215,7 @@ declare global {
   const useInterval: typeof import('@vueuse/core')['useInterval']
   const useIntervalFn: typeof import('@vueuse/core')['useIntervalFn']
   const useJobCategoriesStore: typeof import('./src/stores/JobCategories')['useJobCategoriesStore']
+  const useJobsApplicationsStore: typeof import('./src/stores/JobApplicationsStore')['useJobsApplicationsStore']
   const useJobsStore: typeof import('./src/stores/JobsStore')['useJobsStore']
   const useKeyModifier: typeof import('@vueuse/core')['useKeyModifier']
   const useLastChanged: typeof import('@vueuse/core')['useLastChanged']
@@ -547,6 +548,7 @@ declare module 'vue' {
     readonly useInterval: UnwrapRef<typeof import('@vueuse/core')['useInterval']>
     readonly useIntervalFn: UnwrapRef<typeof import('@vueuse/core')['useIntervalFn']>
     readonly useJobCategoriesStore: UnwrapRef<typeof import('./src/stores/JobCategories')['useJobCategoriesStore']>
+    readonly useJobsApplicationsStore: UnwrapRef<typeof import('./src/stores/JobApplicationsStore')['useJobsApplicationsStore']>
     readonly useJobsStore: UnwrapRef<typeof import('./src/stores/JobsStore')['useJobsStore']>
     readonly useKeyModifier: UnwrapRef<typeof import('@vueuse/core')['useKeyModifier']>
     readonly useLastChanged: UnwrapRef<typeof import('@vueuse/core')['useLastChanged']>

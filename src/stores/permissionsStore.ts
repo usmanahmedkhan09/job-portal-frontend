@@ -7,11 +7,12 @@ export const usePermissionsStore = defineStore('permissions', () =>
     const permissions = ref<Permission[]>([])
     const permission = ref<Permission>(new Permission());
 
-    async function fetchPermissions(name: string | null = null): Promise<void>
+    async function fetchPermissions(name: string | null = null, paginate: boolean = true): Promise<void>
     {
         try
         {
-            const response: AxiosResponse<ApiResponse<{ permissions: Permission[] }>> = await axios.get('/permissions', { params: { name: name } });
+            const response: AxiosResponse<ApiResponse<{ permissions: Permission[] }>> = await axios.get('/permissions',
+                { params: { name: name, paginate: paginate } });
             const { success, statusCode, data } = response.data;
             if (success && statusCode === 200)
                 permissions.value = [...data.permissions]

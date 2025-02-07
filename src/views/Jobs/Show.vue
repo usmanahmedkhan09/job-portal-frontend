@@ -82,7 +82,9 @@ onMounted(() => {
       </div>
       <div class="grid sm:grid-cols-2">
         <dt class="font-medium">Job Requirements</dt>
-        <dd>{{ job?.requirements ?? 'N/A' }}</dd>
+        <dd>
+          <div v-html="job?.requirements"></div>
+        </dd>
       </div>
       <div class="grid sm:grid-cols-2">
         <dt class="font-medium">Description</dt>

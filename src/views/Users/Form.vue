@@ -32,7 +32,7 @@ const setInitialStates = async () => {
   }
 
   await rolesStore.fetchRoles();
-  await permissionsStore.fetchPermissions();
+  await permissionsStore.fetchPermissions(null, false);
 };
 
 async function createUser(isValid: any): Promise<void> {

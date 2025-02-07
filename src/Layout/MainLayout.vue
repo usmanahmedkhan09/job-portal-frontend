@@ -114,6 +114,14 @@ const mainList: (MenuArrayItem & { permission?: string })[] = [
         icon: '',
       },
       {
+        to: '/jobs-applications-list',
+        label: 'Jobs Applications',
+        value: '',
+        exact: true,
+        permission: permissionsEnum.JOB_MENU,
+        icon: '',
+      },
+      {
         to: '/job-categories',
         label: 'Jobs Categories',
         value: '',
@@ -126,22 +134,23 @@ const mainList: (MenuArrayItem & { permission?: string })[] = [
 ];
 
 const computedMenu = computed(() => {
-  return mainList.map((menu) => {
-    let item = { ...menu };
-    if (item.items) {
-      item.items = item.items.filter((subItem) => {
-        if (subItem.permission) {
-          const hasPermission = userPermissions.value.includes(
-            subItem.permission
-          );
-          if (!hasPermission) {
-            return null;
-          }
-        }
-        return subItem;
-      });
-    }
-    return item;
-  });
+  return mainList;
+  // return mainList.map((menu) => {
+  //   let item = { ...menu };
+  //   if (item.items) {
+  //     item.items = item.items.filter((subItem) => {
+  //       if (subItem.permission) {
+  //         const hasPermission = userPermissions.value.includes(
+  //           subItem.permission
+  //         );
+  //         if (!hasPermission) {
+  //           return null;
+  //         }
+  //       }
+  //       return subItem;
+  //     });
+  //   }
+  //   return item;
+  // });
 });
 </script>

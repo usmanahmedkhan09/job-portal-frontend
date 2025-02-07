@@ -19,7 +19,6 @@
     "src/**/*.ts",          // All TypeScript files in `src`
     "src/**/*.d.ts",        // All declaration files in `src`
     "src/types/global.d.ts",   // Ensure `types` folder is included
-    // "src/assets/icons/icons.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

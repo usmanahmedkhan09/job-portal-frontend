@@ -4,8 +4,8 @@ import { TableHeader } from '@/Types/CommonTypes';
 import { JobCategory, JobStatus } from '@/Types/Job';
 const formatted = (date) => useDateFormat(date, 'YYYY-MM-DD HH:mm:ss');
 
-const jobsStore = useJobsStore();
-const { jobs, pagination } = storeToRefs(jobsStore);
+const jobsApplicationsStore = useJobsApplicationsStore();
+const { jobsApplications, pagination } = storeToRefs(jobsApplicationsStore);
 
 const jobCategoriesStore = useJobCategoriesStore();
 const { jobCategories } = storeToRefs(jobCategoriesStore);
@@ -61,11 +61,10 @@ const filters = ref({
   skills: [],
   job_type: '',
   status: '',
-  page: 1,
 });
 
 function onSubmit() {
-  jobsStore.fetchJobs(filters.value as any);
+  jobsApplicationsStore.fetchJobsApplication(filters.value as any);
 }
 
 async function onReset() {
@@ -75,33 +74,22 @@ async function onReset() {
     skills: [],
     job_type: '',
     status: '',
-    page: 1,
   };
-  await jobsStore.fetchJobs();
+  await jobsApplicationsStore.fetchJobsApplication();
 }
 
 const setInitialStates = async () => {
-  await jobsStore.fetchJobs();
+  await jobsApplicationsStore.fetchJobsApplication();
   await jobCategoriesStore.fetchJobCategories();
 };
 
 onMounted(() => {
   setInitialStates();
 });
-
-const nextPage = (page: any) => {
-  filters.value.page = page;
-  jobsStore.fetchJobs(filters.value as any);
-};
 </script>
 <template>
   <div class="flex justify-between items-center w-full">
-    <h2 class="text-xl font-semibold">Jobs List</h2>
-    <div class="flex space-x-2 items-center">
-      <x-button color="primary" size="md" @click="$router.push('/create-job')"
-        >Create Jobs</x-button
-      >
-    </div>
+    <h2 class="text-xl font-semibold">Jobs Applications List</h2>
   </div>
   <x-divider class="my-4" />
   <x-form @submit="onSubmit" :auto-focus="false">
@@ -122,22 +110,7 @@ const nextPage = (page: any) => {
         placeholder="Select Job Category"
       />
       <x-select
-        label="Skills"
-        name="skills"
-        v-model="filters.skills"
-        :options="computedSkills"
-        multiple
-        placeholder="Select Skills"
-      />
-      <x-select
-        label="Job Type"
-        name="job type"
-        v-model="filters.job_type"
-        :options="jobTypesOptions"
-        placeholder="Select Job Type"
-      />
-      <x-select
-        label="Status"
+        label="Job Application Status"
         name="status"
         v-model="filters.status"
         :options="jobStatusOptions"
@@ -155,7 +128,7 @@ const nextPage = (page: any) => {
     class="customize-table rounded-lg"
     table-class-name="rounded-lg"
     :headers="tableHeaders"
-    :items="jobs || []"
+    :items="jobsApplications || []"
     hide-footer
   >
     <template #item-id="{ id }">
@@ -168,5 +141,5 @@ const nextPage = (page: any) => {
       <span>{{ user.name }}</span>
     </template>
   </DataTable>
-  <Pagination :links="pagination" @page-changed="(page) => nextPage(page)" />
+  <Pagination :links="pagination" />
 </template>
