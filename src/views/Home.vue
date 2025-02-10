@@ -58,7 +58,7 @@ onUnmounted(() => {
 });
 
 const setInitialState = async () => {
-  await jobStore.fetchJobs();
+  await jobStore.fetchJobs({ title: null, location: null });
   activeJob.value = jobs.value[0] || new Job();
 };
 
