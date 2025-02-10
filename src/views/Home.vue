@@ -8,11 +8,17 @@ const isFocused = ref(false);
 const jobStore = useJobsStore();
 const { jobs } = storeToRefs(jobStore);
 
-const activeJob = ref<Job>(new Job());
+const activeJob = ref<Job>(jobs.value[0] || new Job());
+
+const { get } = useCookies(['search_history']);
 
 function changeTab(tab: string) {
   activeTab.value = tab;
 }
+
+const computedSearchHistory = computed(() => {
+  return get('search_history') || [];
+});
 
 function adjustJobDetailsHeight() {
   let jobDetails = document.getElementById('jobDetails');
@@ -57,10 +63,7 @@ const setInitialState = async () => {
 };
 
 const handleSelectedJob = (job: Job) => {
-  activeJob.value = null;
-  setTimeout(() => {
-    activeJob.value = job;
-  }, 1000);
+  activeJob.value = job;
 };
 
 onMounted(() => {
@@ -143,13 +146,23 @@ onMounted(() => {
     class="flex justify-center items-center flex-col mt-5 gap-2 text-center"
     v-else
   >
-    <h1 class="font-bold text-lg">No recent searches yet</h1>
-    <p>
-      After you run a search, your recent <br />
-      searches will live here.
-    </p>
-    <x-button color="primary" outlined @click="isFocused = true"
-      >Start a search</x-button
-    >
+    <div v-if="computedSearchHistory.length === 0">
+      <h1 class="font-bold text-lg">No recent searches yet</h1>
+      <p>
+        After you run a search, your recent <br />
+        searches will live here.
+      </p>
+      <x-button color="primary" outlined @click="isFocused = true"
+        >Start a search</x-button
+      >
+    </div>
+    <template v-else>
+      <JobSearchItem
+        class="min-w-[600px]"
+        v-for="job in computedSearchHistory"
+        :key="job.title"
+        :job="job"
+      />
+    </template>
   </div>
 </template>

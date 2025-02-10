@@ -17,6 +17,7 @@ declare module 'vue' {
     JobCard: typeof import('./src/Components/JobCard.vue')['default']
     JobDetail: typeof import('./src/Components/JobDetail.vue')['default']
     JobListing: typeof import('./src/Components/JobListing.vue')['default']
+    JobSearchItem: typeof import('./src/Components/JobSearchItem.vue')['default']
     Pagination: typeof import('./src/Components/Pagination.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

@@ -24,6 +24,9 @@ export default defineConfig({
       imports: [
         'vue',
         '@vueuse/core',
+        {
+          '@vueuse/integrations/useCookies': ['useCookies']
+        },
         'vue-router',
         'pinia',
         {

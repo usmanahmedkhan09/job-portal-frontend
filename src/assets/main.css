@@ -92,3 +92,7 @@
   @apply bg-yellow-500 text-black;
 }
 
+label {
+  @apply mb-0 !important;
+}
+

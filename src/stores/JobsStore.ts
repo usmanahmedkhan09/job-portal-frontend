@@ -7,12 +7,19 @@ export const useJobsStore = defineStore('jobs', () =>
     const job = ref<Job>(new Job());
     const { useCleanObj } = useUtils();
     const pagination = ref<Pagination<Job>>(new Pagination());
+    const { set, get } = useCookies(['search_history']);
 
     const allJobs = computed(() => jobs.value);
     async function fetchJobs(job: Pick<Job, 'title' | 'location'>): Promise<void>
     {
         const response = await axios.get<ApiResponse<Job[]>>('/get-all-jobs', { params: { ...job } });
         const { success, statusCode, data } = response.data;
+        const searchHistory = get('search_history');
+        if (searchHistory && job)
+            set('search_history', [...searchHistory, { ...job, count: data.length + 1 }]);
+        else if (!searchHistory && job)
+            set('search_history', [{ ...job, count: data.length + 1 }]);
+
         if (success && statusCode === 200)
             jobs.value = data;
     }
