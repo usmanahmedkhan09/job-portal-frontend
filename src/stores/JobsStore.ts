@@ -14,11 +14,11 @@ export const useJobsStore = defineStore('jobs', () =>
     {
         const response = await axios.get<ApiResponse<Job[]>>('/get-all-jobs', { params: { ...job } });
         const { success, statusCode, data } = response.data;
+        let id = '_' + Math.random().toString(36).substr(2, 9);
         const searchHistory = get('search_history');
-        if (searchHistory && job)
-            set('search_history', [...searchHistory, { ...job, count: data.length + 1 }]);
-        else if (!searchHistory && job)
-            set('search_history', [{ ...job, count: data.length + 1 }]);
+        const isJobPresent = searchHistory?.some(history => history.title === job.title && history.location === job.location);
+        if (!isJobPresent && (job.title || job.location))
+            set('search_history', searchHistory ? [...searchHistory, { ...job, count: data.length + 1, id: id }] : [{ ...job, count: data.length + 1, id: id }]);
 
         if (success && statusCode === 200)
             jobs.value = data;

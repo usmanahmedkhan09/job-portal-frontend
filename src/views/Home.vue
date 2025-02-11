@@ -66,6 +66,10 @@ const handleSelectedJob = (job: Job) => {
   activeJob.value = job;
 };
 
+const fetchJobs = async (job: any) => {
+  await jobStore.fetchJobs({ title: job.title, location: job.location });
+  activeTab.value = 'jobs';
+};
 onMounted(() => {
   setInitialState();
 });
@@ -162,6 +166,7 @@ onMounted(() => {
         v-for="job in computedSearchHistory"
         :key="job.title"
         :job="job"
+        @handleSelectedJob="fetchJobs"
       />
     </template>
   </div>
