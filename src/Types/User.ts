@@ -10,6 +10,10 @@ export default class User
     roles: Role[] | [] = [];
     permissions: Permission[] | [] = [];
     token?: string | undefined;
+    company_name: string | null = null;
+    company_website: string | null = null;
+    company_description: string | null = null;
+    company_id: string | null = null;
 }
 
 

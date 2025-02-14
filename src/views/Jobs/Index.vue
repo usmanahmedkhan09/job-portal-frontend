@@ -65,7 +65,7 @@ const filters = ref({
 });
 
 function onSubmit() {
-  jobsStore.fetchJobs(filters.value as any);
+  jobsStore.getJobs(filters.value as any);
 }
 
 async function onReset() {
@@ -77,11 +77,11 @@ async function onReset() {
     status: '',
     page: 1,
   };
-  await jobsStore.fetchJobs();
+  await jobsStore.getJobs();
 }
 
 const setInitialStates = async () => {
-  await jobsStore.fetchJobs();
+  await jobsStore.getJobs();
   await jobCategoriesStore.fetchJobCategories();
 };
 
@@ -91,7 +91,7 @@ onMounted(() => {
 
 const nextPage = (page: any) => {
   filters.value.page = page;
-  jobsStore.fetchJobs(filters.value as any);
+  jobsStore.getJobs(filters.value as any);
 };
 </script>
 <template>

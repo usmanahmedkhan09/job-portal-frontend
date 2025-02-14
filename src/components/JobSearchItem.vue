@@ -2,12 +2,29 @@
 defineProps({
   job: Object,
 });
-</script>
 
+const { set, get } = useCookies(['search_history']);
+
+type Job = {
+  id: string;
+  title: string;
+  location: string;
+  count: number;
+};
+
+const removeJob = (jobId: string) => {
+  const searchHistory = get('search_history') || [];
+  const newSearchHistory = searchHistory.filter((j: Job) => j.id !== jobId);
+  set('search_history', newSearchHistory);
+};
+</script>
 <template>
-  <div class="p-4 border-b">
+  <div class="p-4 border-b cursor-pointer">
     <div class="flex justify-between items-center">
-      <div class="flex flex-col items-start">
+      <div
+        class="flex flex-col items-start"
+        @click="$emit('handleSelectedJob', job)"
+      >
         <h2 class="text-lg">{{ job?.title }}</h2>
         <span class="text-gray-600 text-red-700" v-if="job?.count">
           {{ job?.count }} new
@@ -16,7 +33,10 @@ defineProps({
           </span>
         </span>
       </div>
-      <button class="text-gray-500 hover:text-gray-700">
+      <button
+        class="text-gray-500 hover:text-gray-700"
+        @click.prevent="removeJob(job?.id)"
+      >
         <svg
           class="w-6 h-6"
           fill="none"

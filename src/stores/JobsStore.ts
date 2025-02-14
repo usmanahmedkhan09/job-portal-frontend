@@ -24,9 +24,9 @@ export const useJobsStore = defineStore('jobs', () =>
             jobs.value = data;
     }
 
-    async function getJobsByUser(job: Job = new Job()): Promise<void>
+    async function getJobs(job: Job = new Job()): Promise<void>
     {
-        const response = await axios.get<ApiResponse<Pagination<Job>>>('/get-job-by-user', { params: { ...Job.cleanObject(useCleanObj(job)) } });
+        const response = await axios.get<ApiResponse<Pagination<Job>>>('/get-jobs', { params: { ...Job.cleanObject(useCleanObj(job)) } });
         const { success, statusCode, data } = response.data;
         if (success && statusCode === 200)
         {
@@ -60,6 +60,6 @@ export const useJobsStore = defineStore('jobs', () =>
 
     }
 
-    return { fetchJobs, updateJob, createJob, getJobById, jobs, job, pagination, allJobs, getJobsByUser };
+    return { fetchJobs, updateJob, createJob, getJobById, jobs, job, pagination, allJobs, getJobs };
 
 })

@@ -63,7 +63,7 @@ const userPermissions = computed(() => {
 const mainList: (MenuArrayItem & { permission?: string })[] = [
   {
     label: 'Dashboard',
-    to: '/',
+    to: '/dashboard',
     value: '',
     icon: '',
   },
@@ -71,6 +71,7 @@ const mainList: (MenuArrayItem & { permission?: string })[] = [
     label: 'Admin',
     value: '',
     icon: '',
+    permission: permissionsEnum.ADMIN_MENU,
     items: [
       {
         to: '/user-list',
@@ -97,13 +98,13 @@ const mainList: (MenuArrayItem & { permission?: string })[] = [
         icon: '',
       },
     ],
-    permission: 'admin',
   },
   {
     label: 'Jobs',
     value: '',
     to: '',
     icon: '',
+    permission: permissionsEnum.JOB_MENU,
     items: [
       {
         to: '/jobs-list',
@@ -118,7 +119,7 @@ const mainList: (MenuArrayItem & { permission?: string })[] = [
         label: 'Jobs Applications',
         value: '',
         exact: true,
-        permission: permissionsEnum.JOB_MENU,
+        permission: permissionsEnum.JOBS_APPLICATION_LIST,
         icon: '',
       },
       {
@@ -126,31 +127,104 @@ const mainList: (MenuArrayItem & { permission?: string })[] = [
         label: 'Jobs Categories',
         value: '',
         exact: true,
-        permission: permissionsEnum.JOB_MENU,
+        permission: permissionsEnum.JOBS_CATEGORIES_LIST,
         icon: '',
       },
     ],
   },
+  {
+    label: 'Companies',
+    value: '',
+    to: '',
+    icon: '',
+    items: [
+      {
+        to: '/companies-list',
+        label: 'Companies List',
+        value: '',
+        exact: true,
+        permission: permissionsEnum.COMPANY_MENU,
+        icon: '',
+      },
+      {
+        to: '/companies-applications-list',
+        label: 'Companies Applications',
+        value: '',
+        exact: true,
+        permission: permissionsEnum.COMPANY_MENU,
+        icon: '',
+      },
+    ],
+  },
+  {
+    label: 'Company',
+    value: '',
+    to: '',
+    items: [
+      {
+        to: '/company-users-list',
+        label: 'Users List',
+        value: '',
+        exact: true,
+        permission: permissionsEnum.COMPANY_MENU,
+        icon: '',
+      },
+    ],
+  },
+  {
+    label: 'Settings',
+    value: '',
+    to: '/settings',
+    icon: '',
+  },
+  {
+    label: 'Profile',
+    value: '',
+    to: '/profile',
+    icon: '',
+  },
+  {
+    label: 'Logout',
+    value: '',
+    to: '/logout',
+    icon: '',
+  },
 ];
 
 const computedMenu = computed(() => {
-  return mainList;
-  // return mainList.map((menu) => {
-  //   let item = { ...menu };
-  //   if (item.items) {
-  //     item.items = item.items.filter((subItem) => {
-  //       if (subItem.permission) {
-  //         const hasPermission = userPermissions.value.includes(
-  //           subItem.permission
-  //         );
-  //         if (!hasPermission) {
-  //           return null;
-  //         }
-  //       }
-  //       return subItem;
-  //     });
-  //   }
-  //   return item;
-  // });
+  return filterMenuItems(userPermissions.value, mainList);
 });
+
+// Function to check permissions
+function hasPermission(userPermissions, item) {
+  if (
+    (item.permission && userPermissions.includes(item.permission)) ||
+    item.label == 'Dashboard'
+  ) {
+    return true;
+  }
+}
+
+// Function to filter menu items
+function filterMenuItems(userPermissions, menuItems) {
+  return menuItems.filter((menu) => {
+    if (menu.items) {
+      let subItems = menu.items.filter((item) => {
+        return hasPermission(userPermissions, item);
+      });
+      if (subItems.length > 0) {
+        menu.items = subItems;
+      }
+      // if (hasPermission(userPermissions, item.items)) {
+      //   return { ...item };
+      // }
+      // const filteredItems = filterMenuItems(userPermissions, item.items);
+      // if (filteredItems.length > 0) {
+      //   return { ...filteredItems };
+      // }
+    }
+    console.log(menu);
+    return hasPermission(userPermissions, menu);
+  });
+}
 </script>

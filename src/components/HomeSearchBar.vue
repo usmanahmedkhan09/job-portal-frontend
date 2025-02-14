@@ -39,7 +39,7 @@ const submitHandler = async () => {
       type="text"
       placeholder="Job title, keywords or company..."
       size="lg"
-      class="w-full mt-1"
+      class="w-full mb-0!"
       v-model="filters.title"
     />
     <x-divider class="h-6" vertical />
@@ -48,7 +48,7 @@ const submitHandler = async () => {
       type="text"
       placeholder='City, state or zip code, or "remote"...'
       size="lg"
-      class="w-full mt-1"
+      class="w-full mb-0!"
       v-model="filters.location"
     />
     <x-button type="submit" class="px-8" color="primary" size="lg"

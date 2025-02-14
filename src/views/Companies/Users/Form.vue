@@ -12,6 +12,23 @@ const { user } = storeToRefs(usersStore);
 
 const route = useRoute();
 
+const computedRoles = computed(() => {
+  const usersRoles = useStorage('roles', []).value;
+  if (usersRoles.includes('Admin')) {
+    return roles.value.map((item: any) => ({
+      label: item.name,
+      value: item.name,
+    }));
+  } else {
+    return roles.value
+      .filter((item: any) => item.name === 'employee')
+      .map((item: any) => ({
+        label: item.name,
+        value: item.name,
+      }));
+  }
+});
+
 const { is_required, is_email } = useRules();
 
 function confirmPasswordRule() {
@@ -30,6 +47,7 @@ const setInitialStates = async () => {
     userForm.value =
       (await usersStore.getUserById(+route.params.id)) || new User();
   }
+  userForm.value.company_id = useStorage('user', new User()).value.company_id;
 
   await rolesStore.fetchRoles();
   await permissionsStore.fetchPermissions(null, false);
@@ -39,7 +57,7 @@ async function createUser(isValid: any): Promise<void> {
   if (!isValid) return;
   if (isEdit.value)
     await usersStore.updateUser(route.params.id as string, userForm.value);
-  else await usersStore.addUser(userForm.value);
+  else await usersStore.createCompanyUser(userForm.value);
 }
 
 onMounted(() => {
@@ -86,37 +104,20 @@ onMounted(() => {
         v-model="userForm.confirm_password"
         :rules="isEdit ? [] : [is_required, confirmPasswordRule]"
       />
+      <x-input
+        label="Company Name"
+        name="company_name"
+        v-model="userForm.company_name"
+        :rules="isEdit ? [] : [is_required, confirmPasswordRule]"
+      />
       <x-select
         v-model="userForm.roles"
         label="Role"
         name="role"
         filterable
         :rules="[is_required]"
-        :options="roles.map((x) => ({ label: x.name, value: x.name }))"
+        :options="computedRoles"
         multiple
-      />
-      <x-select
-        label="Permissions"
-        name="permissions"
-        filterable
-        v-model="userForm.permissions"
-        :options="permissions.map((x) => ({ label: x.name, value: x.name }))"
-        multiple
-      />
-      <x-input
-        label="Company Name"
-        v-model="userForm.company_name"
-        name="company_name"
-      />
-      <x-input
-        label="Company Website"
-        v-model="userForm.company_website"
-        name="company_website"
-      />
-      <x-textarea
-        label="Company Description"
-        v-model="userForm.company_description"
-        name="company_website"
       />
     </div>
     <div class="flex w-full justify-end">

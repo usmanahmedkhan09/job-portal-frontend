@@ -101,5 +101,23 @@ export const useUsersStore = defineStore('user', () =>
 
   };
 
-  return { user, users, isAuthenticated, userPermissions, fetchUsers, getCsrfToken, handleLogin, handleLogout, getUserById, addUser, updateUser, deleteUser }
+  async function getUsersByCompanyId(company_id: string | null = null): Promise<User[]>
+  {
+    const compId = useStorage('user', new User()).value.company_id
+    const companyId = compId ? compId : company_id;
+
+    const response = await axios.get<ApiResponse<{ users: User[] }>>(`/get-users-by-companyId/${companyId}`);
+    const { data } = response.data;
+    users.value = data.users;
+    return data.users;
+  }
+
+  async function createCompanyUser(user: User): Promise<void>
+  {
+    const response = await axios.post<ApiResponse<{ user: User }>>('/create-company-user', user);
+    let { data } = response.data;
+    users.value.push(data.user);
+  }
+
+  return { user, users, isAuthenticated, userPermissions, fetchUsers, getCsrfToken, handleLogin, handleLogout, getUserById, addUser, updateUser, deleteUser, getUsersByCompanyId, createCompanyUser }
 })

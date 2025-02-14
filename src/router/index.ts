@@ -90,8 +90,27 @@ const router = createRouter({
       children: [
         { path: '', name: 'jobs-applications-list', component: () => import('@/views/JobApplications/Index.vue') },
       ]
-    }
-
+    },
+    {
+      path: '/companies-list',
+      name: 'companies',
+      meta: { requiresAuth: true }, // Requires authentication
+      component: () => import('@/Layout/MainLayout.vue'),
+      children: [
+        { path: '', name: 'companies-list', component: () => import('@/views/Companies/Index.vue') },
+        { path: '/create-company', name: 'create-company', component: () => import('@/views/Companies/Form.vue') },
+      ]
+    },
+    {
+      path: '/company-users-list',
+      name: 'users-companies',
+      meta: { requiresAuth: true }, // Requires authentication
+      component: () => import('@/Layout/MainLayout.vue'),
+      children: [
+        { path: '', name: 'company-users-list', component: () => import('@/views/Companies/Users/Index.vue') },
+        { path: '/create-company-users', name: 'create-company-users', component: () => import('@/views/Companies/Users/Form.vue') },
+      ]
+    },
   ],
 })
 

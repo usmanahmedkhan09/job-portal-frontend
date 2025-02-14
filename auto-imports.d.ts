@@ -7,6 +7,8 @@
 export {}
 declare global {
   const ApiResponse: typeof import('./src/Types/ApiResponse')['ApiResponse']
+  const Company: typeof import('./src/Types/Company')['Company']
+  const CompanyFilter: typeof import('./src/Types/Company')['CompanyFilter']
   const EffectScope: typeof import('vue')['EffectScope']
   const Job: typeof import('./src/Types/Job')['Job']
   const JobCategory: typeof import('./src/Types/Job')['JobCategory']
@@ -169,6 +171,7 @@ declare global {
   const useClipboardItems: typeof import('@vueuse/core')['useClipboardItems']
   const useCloned: typeof import('@vueuse/core')['useCloned']
   const useColorMode: typeof import('@vueuse/core')['useColorMode']
+  const useCompaniesStore: typeof import('./src/stores/CompanyStore')['useCompaniesStore']
   const useConfirmDialog: typeof import('@vueuse/core')['useConfirmDialog']
   const useCookie: typeof import('@vueuse/integrations')['useCookie']
   const useCookies: typeof import('@vueuse/integrations/useCookies')['useCookies']
@@ -351,6 +354,8 @@ declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly ApiResponse: UnwrapRef<typeof import('./src/Types/ApiResponse')['ApiResponse']>
+    readonly Company: UnwrapRef<typeof import('./src/Types/Company')['Company']>
+    readonly CompanyFilter: UnwrapRef<typeof import('./src/Types/Company')['CompanyFilter']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly Job: UnwrapRef<typeof import('./src/Types/Job')['Job']>
     readonly JobCategory: UnwrapRef<typeof import('./src/Types/Job')['JobCategory']>
@@ -506,6 +511,7 @@ declare module 'vue' {
     readonly useClipboardItems: UnwrapRef<typeof import('@vueuse/core')['useClipboardItems']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
+    readonly useCompaniesStore: UnwrapRef<typeof import('./src/stores/CompanyStore')['useCompaniesStore']>
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
     readonly useCookies: UnwrapRef<typeof import('@vueuse/integrations/useCookies')['useCookies']>
     readonly useCountdown: UnwrapRef<typeof import('@vueuse/core')['useCountdown']>

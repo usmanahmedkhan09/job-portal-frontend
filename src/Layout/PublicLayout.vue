@@ -19,8 +19,8 @@
       <nav class="flex">
         <ul class="flex gap-2">
           <li>
-            <x-link class="font-medium" color="primary" to="/login"
-              >Sign In</x-link
+            <a class="font-medium text-primary" color="primary" href="/login"
+              >Sign In</a
             >
           </li>
           <x-divider class="h-6 mx-6" vertical />

@@ -59,7 +59,7 @@ export const useUtils = () =>
     {
         const user = { ...userData };
 
-        user.permissions = user.permissions.map(permission => permission.name);
+        // user.permissions = user.permissions.map(permission => permission.name);
         user.roles = user.roles.map(role => role.name);
 
         useLocalStorage('token', user.token);
