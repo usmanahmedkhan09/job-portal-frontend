@@ -215,15 +215,7 @@ function filterMenuItems(userPermissions, menuItems) {
       if (subItems.length > 0) {
         menu.items = subItems;
       }
-      // if (hasPermission(userPermissions, item.items)) {
-      //   return { ...item };
-      // }
-      // const filteredItems = filterMenuItems(userPermissions, item.items);
-      // if (filteredItems.length > 0) {
-      //   return { ...filteredItems };
-      // }
     }
-    console.log(menu);
     return hasPermission(userPermissions, menu);
   });
 }

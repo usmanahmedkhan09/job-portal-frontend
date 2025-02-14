@@ -17,8 +17,24 @@
       </div>
 
       <nav class="flex">
-        <ul class="flex gap-2">
-          <li>
+        <ul class="flex gap-2 items-center">
+          <li
+            v-if="!isAuthenticated"
+            class="flex items-center gap-6 cursor-pointer"
+          >
+            <div
+              class="rounded p-1 hover:bg-primary-200 hover:border hover:border-gray-300"
+            >
+              <x-icon class="!h-6 !w-6" icon="message"></x-icon>
+            </div>
+            <div
+              class="rounded p-1 hover:bg-primary-200 hover:border hover:border-gray-300"
+            >
+              <x-icon class="!h-6 !w-6" icon="bell"></x-icon>
+            </div>
+            <ProfileCard />
+          </li>
+          <li v-else>
             <a class="font-medium text-primary" color="primary" href="/login"
               >Sign In</a
             >
@@ -38,9 +54,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-
-const isLoggedOut = ref(true);
+const isAuthenticated = computed(() =>
+  useStorage('user', new User()).value.id ? true : false
+);
+console.log('isAuthenticated', isAuthenticated.value);
 </script>
 
 <style scoped>

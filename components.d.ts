@@ -19,6 +19,7 @@ declare module 'vue' {
     JobListing: typeof import('./src/Components/JobListing.vue')['default']
     JobSearchItem: typeof import('./src/Components/JobSearchItem.vue')['default']
     Pagination: typeof import('./src/Components/Pagination.vue')['default']
+    ProfileCard: typeof import('./src/Components/ProfileCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheWelcome: typeof import('./src/Components/TheWelcome.vue')['default']
