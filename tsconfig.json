@@ -10,15 +10,18 @@
     "types": ["vue", "vite/client", "./auto-imports.d.ts"],
     "noImplicitAny": false,
     "declaration": true,
+    "declarationDir": "dist/types", // Output directory for declaration files
+    "outDir": "dist", // Output directory for compiled files
+    "sourceMap": true, // Enable source maps for debugging
     "strict": true, // Enforces strict type checking
     "esModuleInterop": true, // For compatibility with CommonJS modules
     "skipLibCheck": true, // Speeds up compilation by skipping checks for node_modules
   },
   "include": [
-    "src/**/*",          // All TypeScript files in `src`
-    "src/**/*.ts",          // All TypeScript files in `src`
-    "src/**/*.d.ts",        // All declaration files in `src`
-    "src/types/global.d.ts",   // Ensure `types` folder is included
+    "src/**/*", // All files in `src`
+    "src/**/*.ts", // All TypeScript files in `src`
+    "src/**/*.d.ts", // All declaration files in `src`
+    "src/types/global.d.ts" // Ensure `types` folder is included
   ],
   "exclude": ["node_modules", "dist"]
 }
