@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Pagination from '@/Components/Pagination.vue';
 import { TableHeader } from '@/Types/CommonTypes';
 import { CompanyFilter } from '@/Types/Company';
 const formatted = (date) => useDateFormat(date, 'YYYY-MM-DD HH:mm:ss');
