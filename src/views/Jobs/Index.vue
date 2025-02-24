@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Pagination from '@/Components/Pagination.vue';
 import { TableHeader } from '@/Types/CommonTypes';
 import { JobCategory, JobStatus } from '@/Types/Job';
 const formatted = (date) => useDateFormat(date, 'YYYY-MM-DD HH:mm:ss');

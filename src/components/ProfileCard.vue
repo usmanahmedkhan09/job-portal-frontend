@@ -2,7 +2,7 @@
 const navigationList = reactive([
   {
     label: 'Profile',
-    to: '/home',
+    to: '/public-profile',
     icon: 'user',
   },
   {
@@ -52,15 +52,15 @@ const navigationList = reactive([
             :key="link?.label"
           >
             <x-icon class="!h-6 !w-6" :icon="link.icon" />
-            <!-- <router-link :to="links.to" class="block py-2 px-4"> -->
-            {{ link.label }}
-            <!-- </router-link> -->
+            <a :href="link.to" class="">{{ link.label }}</a>
           </li>
           <x-divider class="" />
           <li
             class="p-5 hover:bg-primary-500 hover:text-white font-medium flex items-center gap-4 justify-center"
           >
-            <a href="/logout" class="font-medium text-primary">Sign out</a>
+            <a href="/logout" class="font-medium text-primary hover:text-white"
+              >Sign out</a
+            >
           </li>
         </ul>
       </x-popover-container>

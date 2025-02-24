@@ -7,6 +7,8 @@ import { createApp } from 'vue';
 import Vue3EasyDataTable from 'vue3-easy-data-table';
 import 'vue3-easy-data-table/dist/style.css';
 
+import '@techie04/vue3-phonenumber-input/dist/css/vue3-phone-input.css';
+
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
@@ -19,11 +21,11 @@ import './Services/axios.service';
 const app = createApp(App)
 app.use(createPinia())
 routerGuard(router)
-app.component('DataTable', Vue3EasyDataTable)
 app.use(router)
 app.use(Toast, {
     bodyClassName: "vue-toastification",
 })
+app.component('DataTable', Vue3EasyDataTable)
 app.use(UI, {
     prefix: 'X',
     theme: {

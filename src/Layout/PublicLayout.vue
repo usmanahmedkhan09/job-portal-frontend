@@ -54,10 +54,10 @@
 </template>
 
 <script setup lang="ts">
-const isAuthenticated = computed(() =>
-  useStorage('user', new User()).value.id ? true : false
-);
-console.log('isAuthenticated', isAuthenticated.value);
+// const isAuthenticated = computed(() =>
+//   useStorage('user', new User()).value.id ? true : false
+// );
+// console.log('isAuthenticated', isAuthenticated.value);
 </script>
 
 <style scoped>
