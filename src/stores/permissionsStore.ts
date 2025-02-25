@@ -1,6 +1,6 @@
 import { ApiResponse } from "@/Types/ApiResponse";
 import Permission from "@/Types/Permission";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 
 export const usePermissionsStore = defineStore('permissions', () =>
 {
@@ -21,9 +21,7 @@ export const usePermissionsStore = defineStore('permissions', () =>
         {
             if (axios.isAxiosError(error))
             {
-                const axiosError = error as AxiosError<ApiResponse>;
-                const { status } = axiosError
-                console.log('axios errr', status)
+                console.log(error);
 
             }
         }

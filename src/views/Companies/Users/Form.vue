@@ -13,7 +13,7 @@ const { user } = storeToRefs(usersStore);
 const route = useRoute();
 
 const computedRoles = computed(() => {
-  const usersRoles = useStorage('roles', []).value;
+  const usersRoles: string[] = useStorage('roles', []).value;
   if (usersRoles.includes('Admin')) {
     return roles.value.map((item: any) => ({
       label: item.name,

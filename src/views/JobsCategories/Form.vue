@@ -15,9 +15,10 @@ const isEdit = computed(() => !!route.params.id);
 
 const setInitialStates = async () => {
   if (isEdit.value) {
-    JobCategoryForm.value =
-      (await jobCategoryStore.getJobCategoryById(+route.params.id)) ||
-      new User();
+    JobCategoryForm.value = (await jobCategoryStore.getJobCategoryById(
+      route.params.id as string
+    )) as JobCategory;
+    new User();
   }
 };
 
@@ -28,7 +29,7 @@ async function createUser(isValid: any): Promise<void> {
       route.params.id as string,
       JobCategoryForm.value
     );
-  else await jobCategoryStore.addJobCategory(JobCategoryForm.value);
+  else await jobCategoryStore.createJobCategory(JobCategoryForm.value);
 }
 
 onMounted(() => {

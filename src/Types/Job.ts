@@ -20,6 +20,9 @@ class Job
     user?: User = new User();
     category?: JobCategory = new JobCategory();
     page: string | null = null;
+    company: string | null = null;
+    rating: number | null = null;
+    activeDays: number | null = null;
 
     constructor(data: Partial<Job> = {})
     {
@@ -48,6 +51,7 @@ class JobCategory
 {
     id?: string | undefined;
     name: string | null = null;
+    skill: string | null = null;
 }
 
 enum JobType

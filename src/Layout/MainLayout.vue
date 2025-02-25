@@ -48,8 +48,6 @@
 </template>
 
 <script setup lang="ts">
-import type { MenuArrayItem } from '@indielayer/ui';
-
 const userStore = useUsersStore();
 const { user } = storeToRefs(userStore);
 
@@ -60,7 +58,7 @@ const userPermissions = computed(() => {
   return localStoragePermissions;
 });
 
-const mainList: (MenuArrayItem & { permission?: string })[] = [
+const mainList = [
   {
     label: 'Dashboard',
     to: '/dashboard',

@@ -125,14 +125,14 @@ onMounted(() => {
         v-for="job in jobs"
         :key="job.id"
         :title="job.title"
-        :company="job.company"
-        :rating="job.rating"
+        :company="job?.company"
+        :rating="job?.rating"
         :location="job.location"
         :salary="job.salary_range"
         :jobType="job.job_type"
         :jobDetails="job.requirements"
         :description="job.description"
-        :activeDays="job.activeDays"
+        :activeDays="job?.activeDays"
         @click="handleSelectedJob(job)"
       />
     </div>

@@ -1,6 +1,6 @@
 import { ApiResponse } from "@/Types/ApiResponse";
 import { Skills } from "@/Types/Skills";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -23,8 +23,7 @@ export const useSkillsStore = defineStore('skills', () =>
         {
             if (axios.isAxiosError(error))
             {
-                const axiosError = error as AxiosError<ApiResponse>;
-                console.error('Error fetching skills:', axiosError.message);
+                console.error('Error fetching skills:');
             }
         }
     }

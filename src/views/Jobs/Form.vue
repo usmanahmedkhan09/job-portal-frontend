@@ -36,7 +36,7 @@ import 'ckeditor5/ckeditor5.css';
 
 const data = ref('<p>Hello world!</p>');
 
-const config = computed(() => {
+const config: any = computed(() => {
   return {
     plugins: [
       Autoformat,

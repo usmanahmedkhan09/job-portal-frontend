@@ -70,13 +70,14 @@ export const useJobCategoriesStore = defineStore('jobCategories', () =>
 
     }
 
-    async function getJobCategoryById(jobCategoryId: string): Promise<void>
+    async function getJobCategoryById(jobCategoryId: string): Promise<JobCategory | undefined>
     {
         try
         {
             const response: AxiosResponse<ApiResponse<{ jobCategory: JobCategory }>> = await axios.get(`/job-categories/${jobCategoryId}`);
             let { data } = response.data;
             jobCategory.value = data.jobCategory;
+            return jobCategory.value
 
         } catch (error)
         {

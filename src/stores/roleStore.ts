@@ -1,6 +1,6 @@
 import { ApiResponse } from "@/Types/ApiResponse";
 import Role from "@/Types/Role";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 
 export const useRolesStore = defineStore('role', () =>
 {
@@ -21,8 +21,6 @@ export const useRolesStore = defineStore('role', () =>
         {
             if (axios.isAxiosError(error))
             {
-                const axiosError = error as AxiosError<ApiResponse>;
-                const { status } = axiosError
                 console.log('axios errr', status)
 
             }
