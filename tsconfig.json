@@ -10,7 +10,7 @@
     "types": ["vue", "vite/client", "./auto-imports.d.ts"],
     "noImplicitAny": false,
     "declaration": true,
-    "declarationDir": "dist/types", // Output directory for declaration files
+    // "declarationDir": "dist/types", // Output directory for declaration files
     "outDir": "dist", // Output directory for compiled files
     "sourceMap": true, // Enable source maps for debugging
     "strict": true, // Enforces strict type checking
