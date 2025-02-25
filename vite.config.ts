@@ -48,8 +48,9 @@ export default defineConfig({
     }),
     Components({
       dts: true,
-      dirs: ['./src/Components'],
+      dirs: ['src/Components'],
       extensions: ['vue'],
+      directoryAsNamespace: true,
     }),
   ],
   resolve: {
