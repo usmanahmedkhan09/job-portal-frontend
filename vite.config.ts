@@ -47,10 +47,10 @@ export default defineConfig({
       dts: './auto-imports.d.ts',
     }),
     Components({
-      dts: true,
       dirs: ['src/Components'],
       extensions: ['vue'],
       directoryAsNamespace: true,
+      dts: 'src/types/components.d.ts',
     }),
   ],
   resolve: {
