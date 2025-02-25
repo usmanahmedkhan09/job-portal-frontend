@@ -1,3 +1,9 @@
+<script setup lang="ts">
+const isAuthenticated = computed(() =>
+  useStorage('user', new User()).value.id ? true : false
+);
+</script>
+
 <template>
   <div class="flex flex-col min-h-screen">
     <header
@@ -11,7 +17,7 @@
         <nav class="mt-1">
           <ul class="flex items-center space-x-4">
             <li><a href="/home">Home</a></li>
-            <li><a href="/register">Company Reviews</a></li>
+            <li><a href="/login">Company Reviews</a></li>
           </ul>
         </nav>
       </div>
@@ -52,12 +58,6 @@
     </footer>
   </div>
 </template>
-
-<script setup lang="ts">
-const isAuthenticated = computed(() =>
-  useStorage('user', new User()).value.id ? true : false
-);
-</script>
 
 <style scoped>
 .public-layout-footer {
