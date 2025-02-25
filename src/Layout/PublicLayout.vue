@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ProfileCard from '@/Components/ProfileCard.vue';
+import ProfileCard from '../Components/ProfileCard.vue';
 const isAuthenticated = computed(() =>
   useStorage('user', new User()).value.id ? true : false
 );
