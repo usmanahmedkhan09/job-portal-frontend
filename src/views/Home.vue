@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import HomeSearchBar from '@/Components/HomeSearchBar.vue';
 import { Job } from '@/Types/Job';
+import HomeSearchBar from '../Components/HomeSearchBar.vue';
 
 const activeTab = ref('jobs');
 
