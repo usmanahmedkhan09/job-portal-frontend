@@ -45,7 +45,8 @@ export default defineConfig({
       dts: './auto-imports.d.ts',
     }),
     Components({
-      dirs: ['@/Components/*'],
+      dirs: ['src/components'],
+      globs: ['src/components/*.{vue}'],
       extensions: ['vue'],
       directoryAsNamespace: false,
       dts: 'src/types/components.d.ts',
