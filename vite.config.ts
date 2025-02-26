@@ -1,10 +1,9 @@
 import vue from '@vitejs/plugin-vue'
+import { fileURLToPath, URL } from 'node:url'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import { fileURLToPath, URL } from 'url'
 import { defineConfig } from 'vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
-
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
