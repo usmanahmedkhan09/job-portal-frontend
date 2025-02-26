@@ -1,5 +1,5 @@
 import vue from '@vitejs/plugin-vue'
-import { fileURLToPath, URL } from 'node:url'
+import path from 'node:path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
@@ -53,7 +53,8 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      // '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': path.join(__dirname, './src')
     },
     extensions: ['.js', '.vue', '.json', '.ts'],
   },
