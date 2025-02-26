@@ -45,10 +45,18 @@ export default defineConfig({
       dts: './auto-imports.d.ts',
     }),
     Components({
-      dirs: ['src/Components'],
+      dirs: ['@/Components/*'],
       extensions: ['vue'],
       directoryAsNamespace: false,
       dts: 'src/types/components.d.ts',
+      include: [/\.vue$/, /\.vue\?vue/],
+      resolvers: [
+        (name) =>
+        {
+          console.log(`Resolving component: ${name}`);
+          return null; // Fallback to default resolver
+        },
+      ],
     }),
   ],
   resolve: {
