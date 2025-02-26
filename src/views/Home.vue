@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import homesearchbar from '@/Components/HomeSearchBar.vue';
 import { Job } from '@/Types/Job';
 
 const activeTab = ref('jobs');
@@ -77,7 +78,7 @@ onMounted(() => {
 <template>
   <div id="homeHeader">
     <div class="flex justify-center" ref="el">
-      <HomeSearchBar
+      <homesearchbar
         class="border flex gap-2 items-center justify-between md:min-w-[800px] p-2 rounded-lg shadow"
         :focus="isFocused"
       />
