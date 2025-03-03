@@ -15,7 +15,6 @@ export default defineConfig({
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
         /\.vue$/,
         /\.vue\?vue/, // .vue
-        /\.md$/, // .md
       ],
 
       // global imports to register
@@ -45,16 +44,15 @@ export default defineConfig({
       dts: './auto-imports.d.ts',
     }),
     Components({
-      dirs: ['src/components'],
-      globs: ['src/components/*.{vue}'],
+      dirs: ['src/components'], // Directory to scan for components
       extensions: ['vue'],
       directoryAsNamespace: false,
-      dts: 'src/types/components.d.ts',
-      include: [/\.vue$/, /\.vue\?vue/],
+      dts: 'src/types/components.d.ts', // Generate TypeScript declarations
+      include: [/\.vue$/, /\.vue\?vue/], // Include .vue files
       resolvers: [
         (name) =>
         {
-          console.log(`Resolving component: ${name}`);
+          console.log(`Resolving component: ${name}`); // Debugging
           return null; // Fallback to default resolver
         },
       ],

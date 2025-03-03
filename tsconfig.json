@@ -19,6 +19,7 @@
   },
   "include": [
     "src/**/*", // All files in `src`
+    "src/**/*.vue", //
     "src/**/*.ts", // All TypeScript files in `src`
     "src/**/*.d.ts", // All declaration files in `src`
     "src/types/global.d.ts" // Ensure `types` folder is included
