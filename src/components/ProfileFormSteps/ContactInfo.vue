@@ -2,7 +2,6 @@
 const phoneNumber = ref('033677787');
 const { getCountries } = useUtils();
 const countries = ref(getCountries());
-console.log('countries', countries.value);
 </script>
 
 <template>
@@ -23,11 +22,6 @@ console.log('countries', countries.value);
         >
       </label>
     </div>
-    <button
-      class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
-    >
-      Submit
-    </button>
     <div class="mt-2 text-xs text-gray-600">
       By submitting the form with this box checked, you confirm that you are the
       primary user and subscriber to the telephone number provided, and you

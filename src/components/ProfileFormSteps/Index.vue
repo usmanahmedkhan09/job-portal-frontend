@@ -4,5 +4,11 @@
 
 <template>
   <!-- <BasicInfo /> -->
-  <ContactInfo />
+  <!-- <ContactInfo /> -->
+  <!-- <Location /> -->
+  <!-- <Education /> -->
+  <!-- <Skills /> -->
+  <!-- <Search /> -->
+  <!-- <JobInfo /> -->
+  <Final />
 </template>

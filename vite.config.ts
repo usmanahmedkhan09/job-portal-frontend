@@ -49,13 +49,6 @@ export default defineConfig({
       directoryAsNamespace: false,
       dts: 'src/types/components.d.ts', // Generate TypeScript declarations
       include: [/\.vue$/, /\.vue\?vue/], // Include .vue files
-      resolvers: [
-        (name) =>
-        {
-          console.log(`Resolving component: ${name}`); // Debugging
-          return null; // Fallback to default resolver
-        },
-      ],
     }),
   ],
   resolve: {
