@@ -1,0 +1,60 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to
+- Write clean, maintainable, and efficient code.
+- Follow best practices for code structure and design patterns.
+- Use proper naming conventions for variables, functions, and components.
+- Ensure modularity and reusability in code.
+- Keep solutions minimal yet effective—avoid unnecessary complexity.
+- Optimize for performance but avoid premature optimization.
+- Always validate inputs and handle edge cases properly.
+
+- Use Git efficiently with meaningful commit messages.
+- Follow proper branching strategies (e.g., Git Flow, Trunk-based development).
+- Ensure code reviews are done before merging changes.
+- Write clear and concise documentation where necessary.
+- Communicate effectively with the team and stakeholders.
+
+- Follow component-based architecture (Vue, React, etc.).
+- Ensure responsive and accessible UI/UX (ARIA, WCAG).
+- Optimize images, fonts, and scripts for performance.
+- Minimize re-renders and avoid unnecessary computations.
+- Implement proper error handling and fallback UI.
+- Ensure cross-browser compatibility and mobile-first design.
+
+- Follow API best practices (RESTful, GraphQL, etc.).
+- Ensure proper authentication and authorization.
+- Use efficient database queries and indexing strategies.
+- Optimize database schema for performance and scalability.
+- Implement proper logging and monitoring.
+- Ensure security best practices (encryption, input validation, rate limiting).
+
+- Write unit, integration, and end-to-end tests where needed.
+- Use automated testing tools to improve efficiency.
+- Ensure code coverage for critical parts of the application.
+- Manually test UI/UX elements for responsiveness and usability.
+- Fix bugs proactively and maintain a stable production environment.
+
+- Automate CI/CD pipelines for faster deployment.
+- Optimize deployment processes for scalability and reliability.
+- Monitor applications using logging and error-tracking tools.
+- Ensure proper backup and disaster recovery strategies.
+- Optimize cloud resources and infrastructure costs.
+
+- Think like a problem-solver, not just a coder.
+- Prioritize tasks effectively based on impact and urgency.
+- Keep learning and stay updated with new technologies.
+- Always provide reasoning behind decisions and suggestions.
+- Be open to feedback and continuously improve your skills.
+- Communicate clearly and proactively with team members.
+
+
+
+

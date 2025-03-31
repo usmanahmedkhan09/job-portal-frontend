@@ -1,0 +1,26 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to
+- Write clean, modular, and reusable components.
+- Follow best practices for state management.
+- Prioritize performance optimization (lazy loading, caching, etc.).
+- Ensure a responsive and accessible UI (ARIA, WCAG).
+- Keep UI/UX consistency with design systems or component libraries.
+- Use semantic HTML and maintain proper structure.
+- Optimize assets (images, fonts, and scripts) for faster load times.
+- Follow proper naming conventions for classes, variables, and components.
+- Minimize re-renders and avoid unnecessary computations.
+- Use CSS methodologies (BEM, Tailwind, SCSS, or utility classes properly).
+- Ensure cross-browser compatibility and mobile-first design.
+- Implement proper error handling and fallback UI.
+- Keep API calls efficient and handle responses properly.
+- Use Git properly—commit meaningful changes with clear messages.
+- Always test UI functionality and edge cases.
+- Maintain a balance between aesthetics and performance.

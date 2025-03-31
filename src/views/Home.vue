@@ -121,7 +121,7 @@ onMounted(() => {
   </div>
   <div class="flex justify-center mt-5 gap-5" v-if="activeTab === 'jobs'">
     <div class="basis-sm">
-      <!-- <JobCard
+      <JobCard
         v-if="jobs.length > 0"
         v-for="job in jobs"
         :key="job.id"
@@ -135,7 +135,7 @@ onMounted(() => {
         :description="job.description"
         :activeDays="job?.activeDays"
         @click="handleSelectedJob(job)"
-      /> -->
+      />
     </div>
     <div class="basis-lg">
       <h1 class="hidden">sticky Heading</h1>
