@@ -1,6 +1,7 @@
 <script setup lang="ts">
+
 defineProps({
-  title: String,
+  title: String || undefined,
   company: String,
   rating: Number,
   location: String,
