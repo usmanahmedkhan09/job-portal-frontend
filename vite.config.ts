@@ -62,7 +62,8 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '^/api': {
-        target: 'http://127.0.0.1:8000',
+        // target: 'http://127.0.0.1:8000',
+        target: 'https://job-portal-backend-a3ux.onrender.com',
         changeOrigin: true,
         rewrite: (path) => path.includes('sanctum') ? path.replace(/^\/api/, '') : path,
       },
