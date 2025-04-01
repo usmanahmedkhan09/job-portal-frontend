@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Backend API Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        button {
+            padding: 8px 16px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Backend API Test</h1>
+        <p>Use this page to test API endpoints directly. This can help diagnose CORS and routing issues.</p>
+
+        <div>
+            <button onclick="testApi('/api/get-all-jobs')">Test Get All Jobs</button>
+            <button onclick="testDirectApi('/api/get-all-jobs')">Test Direct API</button>
+            <button onclick="testBackendApi('/get-all-jobs')">Test Backend API</button>
+        </div>
+
+        <div id="result">Results will appear here</div>
+    </div>
+
+    <script>
+        const resultDiv = document.getElementById('result');
+
+        async function testApi(endpoint)
+        {
+            resultDiv.textContent = `Testing ${endpoint}...`;
+
+            try
+            {
+                const response = await axios.get(endpoint);
+                resultDiv.textContent = `Success:\n${JSON.stringify(response.data, null, 2)}`;
+            } catch (error)
+            {
+                resultDiv.textContent = `Error: ${error.message}\n\n`;
+
+                if (error.response)
+                {
+                    resultDiv.textContent += `Response data: ${JSON.stringify(error.response.data, null, 2)}\n`;
+                    resultDiv.textContent += `Status: ${error.response.status}\n`;
+                    resultDiv.textContent += `Headers: ${JSON.stringify(error.response.headers, null, 2)}`;
+                }
+            }
+        }
+
+        async function testDirectApi(endpoint)
+        {
+            resultDiv.textContent = `Testing relative endpoint ${endpoint}...`;
+
+            try
+            {
+                const response = await fetch(endpoint);
+                const data = await response.text();
+
+                try
+                {
+                    const jsonData = JSON.parse(data);
+                    resultDiv.textContent = `Success (JSON):\n${JSON.stringify(jsonData, null, 2)}`;
+                } catch
+                {
+                    resultDiv.textContent = `Response (not JSON):\n${data.substring(0, 500)}...`;
+                }
+            } catch (error)
+            {
+                resultDiv.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        async function testBackendApi(endpoint)
+        {
+            const backendUrl = 'https://job-portal-backend-a3ux.onrender.com/api';
+            resultDiv.textContent = `Testing direct backend URL: ${backendUrl}${endpoint}...`;
+
+            try
+            {
+                const response = await axios.get(`${backendUrl}${endpoint}`);
+                resultDiv.textContent = `Success:\n${JSON.stringify(response.data, null, 2)}`;
+            } catch (error)
+            {
+                resultDiv.textContent = `Error: ${error.message}\n\n`;
+
+                if (error.response)
+                {
+                    resultDiv.textContent += `Response data: ${JSON.stringify(error.response.data, null, 2)}\n`;
+                    resultDiv.textContent += `Status: ${error.response.status}\n`;
+                    resultDiv.textContent += `Headers: ${JSON.stringify(error.response.headers, null, 2)}`;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
