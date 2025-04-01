@@ -2,11 +2,6 @@
   publish = "dist"
   command = "yarn build"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
 # API proxy - MUST come before the SPA fallback
 [[redirects]]
   from = "/api/*"
@@ -14,3 +9,10 @@
   status = 200
   force = true
   headers = { Access-Control-Allow-Origin = "*" }
+  
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+
