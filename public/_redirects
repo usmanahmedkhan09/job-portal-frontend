@@ -1,1 +1,3 @@
-/*    /index.html   200
+# Redirect API requests to backend
+/api/*  https://job-portal-backend-a3ux.onrender.com/api/:splat  200
+/*      /index.html                                              200

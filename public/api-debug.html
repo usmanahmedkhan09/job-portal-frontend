@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>API Debugging Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        .debug-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-top: 10px;
+            font-family: monospace;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .request-info {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: white;
+            border-radius: 4px;
+        }
+
+        .log {
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border-radius: 4px;
+            overflow: auto;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            color: #333;
+            margin: 0;
+        }
+
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        .tab button.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>API Debugging Tool</h1>
+    <p>This tool helps you diagnose issues with your API connections, specifically for Netlify proxying.</p>
+
+    <div class="tab">
+        <button class="tablinks active"
+                onclick="openTab(event, 'TestAPI')">Test API</button>
+        <button class="tablinks"
+                onclick="openTab(event, 'RequestInspector')">Request Inspector</button>
+        <button class="tablinks"
+                onclick="openTab(event, 'ProxyTester')">Proxy Tester</button>
+    </div>
+
+    <div id="TestAPI"
+         class="tabcontent"
+         style="display:block;">
+        <div class="debug-section">
+            <h2>API Test</h2>
+            <p>Test different ways of accessing the API to identify where the issue lies:</p>
+
+            <div>
+                <button onclick="testApi('/api/get-all-jobs', 'netlifyProxyResult')">Test Netlify Proxy</button>
+                <button
+                        onclick="testDirectApi('https://job-portal-backend-a3ux.onrender.com/api/get-all-jobs', 'directApiResult')">Test
+                    Direct API</button>
+                <button onclick="testWithHeaders('/api/get-all-jobs', 'customHeadersResult')">Test With Custom
+                    Headers</button>
+                <button onclick="testCorsMode('/api/get-all-jobs', 'corsModeResult')">Test CORS Mode</button>
+            </div>
+
+            <h3>Netlify Proxy Result:</h3>
+            <textarea id="netlifyProxyResult"
+                      readonly></textarea>
+
+            <h3>Direct API Result:</h3>
+            <textarea id="directApiResult"
+                      readonly></textarea>
+
+            <h3>Custom Headers Result:</h3>
+            <textarea id="customHeadersResult"
+                      readonly></textarea>
+
+            <h3>CORS Mode Result:</h3>
+            <textarea id="corsModeResult"
+                      readonly></textarea>
+        </div>
+    </div>
+
+    <div id="RequestInspector"
+         class="tabcontent">
+        <div class="debug-section">
+            <h2>Request Inspector</h2>
+            <p>See detailed information about requests to help diagnose CORS and proxy issues:</p>
+
+            <div>
+                <button onclick="inspectRequest('/api/get-all-jobs')">Inspect Netlify Proxy Request</button>
+                <button onclick="clearLog('requestLog')">Clear Log</button>
+            </div>
+
+            <div id="requestLog"
+                 class="log">Request inspection results will appear here...</div>
+
+            <div class="request-info"
+                 id="requestInfo">
+                <h3>Request Details:</h3>
+                <div id="requestDetails">Make a request to see details</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ProxyTester"
+         class="tabcontent">
+        <div class="debug-section">
+            <h2>Proxy Tester</h2>
+            <p>Test with different proxy configurations to identify what works:</p>
+
+            <div>
+                <input type="text"
+                       id="customEndpoint"
+                       placeholder="/api/get-all-jobs"
+                       style="padding:10px; width:300px;">
+                <button onclick="testCustomEndpoint()">Test Custom Endpoint</button>
+            </div>
+
+            <h3>Result:</h3>
+            <textarea id="proxyResult"
+                      readonly></textarea>
+
+            <h3>Try Alternative Proxy Methods:</h3>
+            <button onclick="testProxyMethod(1)">Method 1: Standard Fetch</button>
+            <button onclick="testProxyMethod(2)">Method 2: CORS Mode</button>
+            <button onclick="testProxyMethod(3)">Method 3: Custom Headers</button>
+            <button onclick="testProxyMethod(4)">Method 4: No-Cors Mode</button>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        function openTab(evt, tabName)
+        {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++)
+            {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++)
+            {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Test API using fetch
+        async function testApi(endpoint, resultId)
+        {
+            const resultArea = document.getElementById(resultId);
+            resultArea.value = "Testing " + endpoint + "...";
+
+            try
+            {
+                const response = await fetch(endpoint);
+                const contentType = response.headers.get("content-type");
+
+                if (contentType && contentType.indexOf("application/json") !== -1)
+                {
+                    const data = await response.json();
+                    resultArea.value = "Status: " + response.status + "\n" + JSON.stringify(data, null, 2);
+                } else
+                {
+                    const text = await response.text();
+                    resultArea.value = "Status: " + response.status + "\nNon-JSON Response:\n" + text.substring(0, 1000) + (text.length > 1000 ? "..." : "");
+                }
+            } catch (error)
+            {
+                resultArea.value = "Error: " + error.message;
+            }
+        }
+
+        // Test direct API
+        async function testDirectApi(endpoint, resultId)
+        {
+            const resultArea = document.getElementById(resultId);
+            resultArea.value = "Testing direct endpoint " + endpoint + "...";
+
+            try
+            {
+                const response = await fetch(endpoint);
+                const contentType = response.headers.get("content-type");
+
+                if (contentType && contentType.indexOf("application/json") !== -1)
+                {
+                    const data = await response.json();
+                    resultArea.value = "Status: " + response.status + "\n" + JSON.stringify(data, null, 2);
+                } else
+                {
+                    const text = await response.text();
+                    resultArea.value = "Status: " + response.status + "\nNon-JSON Response:\n" + text.substring(0, 1000) + (text.length > 1000 ? "..." : "");
+                }
+            } catch (error)
+            {
+                resultArea.value = "Error: " + error.message;
+            }
+        }
+
+        // Test with custom headers
+        async function testWithHeaders(endpoint, resultId)
+        {
+            const resultArea = document.getElementById(resultId);
+            resultArea.value = "Testing with custom headers " + endpoint + "...";
+
+            try
+            {
+                const response = await fetch(endpoint, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                const contentType = response.headers.get("content-type");
+
+                if (contentType && contentType.indexOf("application/json") !== -1)
+                {
+                    const data = await response.json();
+                    resultArea.value = "Status: " + response.status + "\n" + JSON.stringify(data, null, 2);
+                } else
+                {
+                    const text = await response.text();
+                    resultArea.value = "Status: " + response.status + "\nNon-JSON Response:\n" + text.substring(0, 1000) + (text.length > 1000 ? "..." : "");
+                }
+            } catch (error)
+            {
+                resultArea.value = "Error: " + error.message;
+            }
+        }
+
+        // Test with CORS mode
+        async function testCorsMode(endpoint, resultId)
+        {
+            const resultArea = document.getElementById(resultId);
+            resultArea.value = "Testing with CORS mode " + endpoint + "...";
+
+            try
+            {
+                const response = await fetch(endpoint, {
+                    mode: 'cors',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const contentType = response.headers.get("content-type");
+
+                if (contentType && contentType.indexOf("application/json") !== -1)
+                {
+                    const data = await response.json();
+                    resultArea.value = "Status: " + response.status + "\n" + JSON.stringify(data, null, 2);
+                } else
+                {
+                    const text = await response.text();
+                    resultArea.value = "Status: " + response.status + "\nNon-JSON Response:\n" + text.substring(0, 1000) + (text.length > 1000 ? "..." : "");
+                }
+            } catch (error)
+            {
+                resultArea.value = "Error: " + error.message;
+            }
+        }
+
+        // Inspect request with detailed logging
+        async function inspectRequest(endpoint)
+        {
+            const logArea = document.getElementById('requestLog');
+            const detailsArea = document.getElementById('requestDetails');
+
+            logArea.textContent = "Inspecting request to " + endpoint + "...";
+
+            try
+            {
+                logArea.textContent += "\n→ Starting fetch request...";
+
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+                const response = await fetch(endpoint, {
+                    signal: controller.signal,
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                clearTimeout(timeoutId);
+
+                logArea.textContent += "\n✓ Received response with status: " + response.status;
+
+                // Log headers
+                logArea.textContent += "\n\nResponse Headers:";
+                response.headers.forEach((value, key) =>
+                {
+                    logArea.textContent += `\n${key}: ${value}`;
+                });
+
+                // Get and log content
+                const contentType = response.headers.get("content-type");
+                logArea.textContent += "\n\nContent-Type: " + contentType;
+
+                if (contentType && contentType.indexOf("application/json") !== -1)
+                {
+                    const data = await response.json();
+                    logArea.textContent += "\n\nResponse Body (JSON):\n" + JSON.stringify(data, null, 2).substring(0, 500) + "...";
+
+                    // Update request details
+                    detailsArea.innerHTML = `
+                        <p><strong>Status:</strong> ${response.status} ${response.statusText}</p>
+                        <p><strong>URL:</strong> ${response.url}</p>
+                        <p><strong>Type:</strong> ${response.type}</p>
+                        <p><strong>Content-Type:</strong> ${contentType}</p>
+                        <p><strong>Response:</strong> JSON data received successfully</p>
+                    `;
+                } else
+                {
+                    const text = await response.text();
+                    logArea.textContent += "\n\nResponse Body (Text):\n" + text.substring(0, 500) + "...";
+
+                    // Update request details
+                    detailsArea.innerHTML = `
+                        <p><strong>Status:</strong> ${response.status} ${response.statusText}</p>
+                        <p><strong>URL:</strong> ${response.url}</p>
+                        <p><strong>Type:</strong> ${response.type}</p>
+                        <p><strong>Content-Type:</strong> ${contentType || 'Not specified'}</p>
+                        <p><strong>Response:</strong> Text data received (not JSON)</p>
+                    `;
+                }
+
+            } catch (error)
+            {
+                logArea.textContent += "\n✗ Error: " + error.message;
+
+                // Update request details for error
+                detailsArea.innerHTML = `
+                    <p><strong>Status:</strong> Failed</p>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p><strong>Type:</strong> ${error.name}</p>
+                    <p><strong>Suggestions:</strong></p>
+                    <ul>
+                        <li>Check if the endpoint URL is correct</li>
+                        <li>Verify that Netlify redirects are properly configured</li>
+                        <li>Check for CORS issues in browser console</li>
+                        <li>Verify the backend is responding properly</li>
+                    </ul>
+                `;
+            }
+        }
+
+        // Clear log
+        function clearLog(logId)
+        {
+            document.getElementById(logId).textContent = '';
+        }
+
+        // Test custom endpoint
+        async function testCustomEndpoint()
+        {
+            const endpoint = document.getElementById('customEndpoint').value || '/api/get-all-jobs';
+            const resultArea = document.getElementById('proxyResult');
+
+            resultArea.value = "Testing endpoint " + endpoint + "...";
+
+            try
+            {
+                const response = await fetch(endpoint);
+                const contentType = response.headers.get("content-type");
+
+                resultArea.value = "Status: " + response.status + "\n";
+                resultArea.value += "Content-Type: " + contentType + "\n\n";
+
+                if (contentType && contentType.indexOf("application/json") !== -1)
+                {
+                    const data = await response.json();
+                    resultArea.value += JSON.stringify(data, null, 2);
+                } else
+                {
+                    const text = await response.text();
+                    resultArea.value += text.substring(0, 1000) + (text.length > 1000 ? "..." : "");
+                }
+            } catch (error)
+            {
+                resultArea.value = "Error: " + error.message;
+            }
+        }
+
+        // Test various proxy methods
+        async function testProxyMethod(method)
+        {
+            const endpoint = document.getElementById('customEndpoint').value || '/api/get-all-jobs';
+            const resultArea = document.getElementById('proxyResult');
+
+            resultArea.value = `Testing proxy method ${method} for ${endpoint}...`;
+
+            try
+            {
+                let response;
+
+                switch (method)
+                {
+                    case 1: // Standard fetch
+                        response = await fetch(endpoint);
+                        break;
+                    case 2: // CORS mode
+                        response = await fetch(endpoint, {
+                            mode: 'cors',
+                            credentials: 'include'
+                        });
+                        break;
+                    case 3: // Custom headers
+                        response = await fetch(endpoint, {
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'X-From-Frontend': 'true'
+                            }
+                        });
+                        break;
+                    case 4: // No-cors mode
+                        response = await fetch(endpoint, {
+                            mode: 'no-cors'
+                        });
+                        resultArea.value = "No-cors mode typically doesn't allow reading the response. Status: " + response.status;
+                        return;
+                }
+
+                const contentType = response.headers.get("content-type");
+
+                resultArea.value = "Status: " + response.status + "\n";
+                resultArea.value += "Content-Type: " + contentType + "\n\n";
+
+                if (contentType && contentType.indexOf("application/json") !== -1)
+                {
+                    const data = await response.json();
+                    resultArea.value += JSON.stringify(data, null, 2);
+                } else
+                {
+                    const text = await response.text();
+                    resultArea.value += text.substring(0, 1000) + (text.length > 1000 ? "..." : "");
+                }
+            } catch (error)
+            {
+                resultArea.value = "Error: " + error.message;
+            }
+        }
+    </script>
+</body>
+
+</html>
